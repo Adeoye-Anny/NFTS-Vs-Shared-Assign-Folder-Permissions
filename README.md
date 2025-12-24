@@ -8,24 +8,24 @@ In this lab, I was tasked with granting a Marketing Intern access to the Marketi
 I ensured the intern had read-only access to the Marketing shared folder while enforcing the principle of least privilege.
 
 ### Step-by-Step Implementation
-  #### 1. Folder Creation 
+#### 1. Folder Creation 
   * I created a folder named "Marketing" on the file server.
   * This folder was designated as the shared location for the Marketing team.
-  #### 2. Share Permissions Configuration
+#### 2. Share Permissions Configuration
   * I right-clicked the Marketing folder and enabled folder sharing.
   * Under Share permissions, I assigned the Marketing group Read access.
   * This allowed network access while preventing file changes.
     <img width="1918" height="1040" alt="image" src="https://github.com/user-attachments/assets/42c81865-5fb0-4faf-8ede-da5de1467a42" />
-  #### 3. NTFS Permissions Configuration
+#### 3. NTFS Permissions Configuration
   * I opened the Security tab on the folder properties.
   * I added the intern user or intern security group.
   * I assigned Read & Execute permissions only.
   * I removed Modify and Write permissions to prevent edits and deletions.
     <img width="1920" height="1036" alt="image" src="https://github.com/user-attachments/assets/22636264-ea00-4f1a-9a9d-3bbe20d84c13" />
-  #### 4. Permission Evaluation
+#### 4. Permission Evaluation
   * I verified that both Share and NTFS permissions were correctly set.
   * Since Windows applies the most restrictive permission, the intern’s access was limited to read-only.
-  #### 5. Testing and Validation
+#### 5. Testing and Validation
   * I logged in using the Marketing Intern account.
   * I successfully accessed and opened files in the Marketing folder.
   * I attempted to delete and modify files and confirmed the actions were blocked.
@@ -34,17 +34,17 @@ I ensured the intern had read-only access to the Marketing shared folder while e
 The Marketing Intern could view and open files only, with no ability to edit, delete, or add files. This confirmed that the permissions were correctly implemented.
 
 ### Key Takeaways
-* Share permissions control network access.
-* NTFS permissions control file-level security.
-* The most restrictive permission always applies.
-* Proper permission configuration prevents accidental or unauthorized data loss.
+  * Share permissions control network access.
+  * NTFS permissions control file-level security.
+  * The most restrictive permission always applies.
+  * Proper permission configuration prevents accidental or unauthorized data loss.
 
 ### Skills Demonstrated
-* NTFS permission management
-* Shared folder configuration
-* Access control and security best practices
-* Hands-on Windows Server administration
-* Permission testing and validation
+  * NTFS permission management
+  * Shared folder configuration
+  * Access control and security best practices
+  * Hands-on Windows Server administration
+  * Permission testing and validation
 
 
 # NTFS vs Shared Permissions – Hands-On Lab (HR Secure Folder)
@@ -83,9 +83,9 @@ I configured the HRGroup folder so that only authorized HR users could access it
 Because non-HR users had no NTFS or Share permissions, the folder was completely invisible to them when browsing network shares.
 
 ### 6. Testing and Validation
-* I logged in as an HR user and confirmed full access to the folder.
-* I logged in as a non-HR user and verified the folder was not visible or accessible.
-* Access attempts from unauthorized users were denied as expected.
+  * I logged in as an HR user and confirmed full access to the folder.
+  * I logged in as a non-HR user and verified the folder was not visible or accessible.
+  * Access attempts from unauthorized users were denied as expected.
 
 ### Result
 Only HR staff could see and access the HRGroup folder. Non-HR users could not view, open, or detect the folder at all. This confirms proper isolation of sensitive data.
@@ -102,3 +102,67 @@ Only HR staff could see and access the HRGroup folder. Non-HR users could not vi
   * Active Directory security group management
   * Least-privilege access enforcement
   * Real-world HR data protection
+
+
+# NTFS vs Shared Permissions – Hands-On Lab (Vendor Upload Only Access)
+### Scenario Overview
+<img width="1920" height="766" alt="image" src="https://github.com/user-attachments/assets/30ebff53-b113-47e1-849a-a382e86df58e" />
+
+In this activity, I was required to provide a third-party vendor with temporary access to a folder named VendorFiles. The vendor needed to upload files only. They must not view, open, modify, or delete any existing files. This scenario demonstrates secure external access using NTFS permissions, write-only configuration, and strict access isolation.
+
+### Objective
+I configured the VendorFiles folder to allow the vendor to drop files without visibility into folder contents, ensuring data confidentiality and preventing unauthorized access.
+
+### Step-by-Step Implementation
+### 1. Security Group Preparation
+  * I created an Active Directory security group named Vendors.
+  * I added only the vendor user account to this group.
+  * No internal users were included.
+### 2. Folder Creation
+  * I created a folder named VendorFiles on the file server.
+  * This folder was intended for temporary vendor uploads only.
+### 3. Share Permissions Configuration
+  * I shared the VendorFiles folder.
+  * I removed default permissions such as Everyone.
+  * I granted Change permission to the Vendors group.
+  * This allowed file uploads while restricting administrative control.
+    <img width="1919" height="1031" alt="image" src="https://github.com/user-attachments/assets/f2a9d2d4-8d3e-4cad-9083-1ccffcc840f7" />
+
+### 4. NTFS Permissions Configuration
+  * I opened the Security tab on the VendorFiles folder.
+  * I disabled inheritance to prevent unintended access.
+  * I assigned the Vendors group the following permissions:
+      * Write
+      * Create files / write data
+  * I explicitly denied or excluded:
+      * Read
+      * List folder contents
+      * Delete
+  * This prevented the vendor from seeing or opening any files.
+    <img width="1920" height="1041" alt="image" src="https://github.com/user-attachments/assets/0bd5aa77-1672-42a8-b027-462086b1d4fd" />
+
+### 5. Folder Visibility Control
+  * Because the vendor lacked Read and List permissions, the folder contents were hidden.
+  * The vendor could upload files but could not browse or view existing data.
+### 6. Testing and Validation
+  * I logged in as the vendor user.
+  * I successfully uploaded files to the VendorFiles folder.
+  * I confirmed the vendor could not see, open, or delete any files.
+  * Access attempts outside the allowed scope were denied.
+
+### Result
+The vendor was able to upload files successfully while remaining completely isolated from existing folder contents. This confirms a secure write-only drop folder configuration.
+
+### Key Takeaways
+  * NTFS permissions can be used to create write-only access.
+  * Removing Read and List permissions hides folder contents.
+  * Vendor access should always be isolated and temporary.
+  * Proper configuration prevents data leakage from third parties.
+
+### Skills Demonstrated
+  * Advanced NTFS permission configuration
+  * Secure vendor access management
+  * Write-only drop folder implementation
+  * Active Directory security group usage
+  * Real-world external access control
+
