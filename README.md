@@ -166,3 +166,67 @@ The vendor was able to upload files successfully while remaining completely isol
   * Active Directory security group usage
   * Real-world external access control
 
+# NTFS vs Shared Permissions – Hands-On Lab (Tiered IT Access Control)
+### Scenario Overview
+<img width="1919" height="744" alt="image" src="https://github.com/user-attachments/assets/d49d0edd-6601-477d-992b-9e3d0888da17" />
+
+In this activity, I configured tiered access within the IT department. All IT technicians required access to the Software repository, but only senior IT staff were permitted to access the sensitive Licenses subfolder. This lab demonstrates NTFS inheritance control, subfolder permission isolation, and role-based access.
+
+### Objective
+I ensured:
+ * All IT staff could access the Software repository.
+ * Only senior IT staff could access the Licenses subfolder.
+ * Junior IT staff were blocked from viewing or accessing Licenses.
+
+### Step-by-Step Implementation
+### 1. Security Group Preparation
+  * I created two Active Directory security groups:
+     * IT_Techs
+     * IT_Senior
+  * I added all IT staff to IT_Techs.
+  * I added only senior IT staff to IT_Senior.
+
+### 2. Folder Structure Creation
+  * I created a parent folder named Software on the file server.
+  * Inside Software, I created a subfolder named Licenses.
+
+### 3. Share Permissions Configuration
+  * I shared the Software folder.
+  * I granted Read or Change access to IT_Techs at the Share level.
+  * I avoided assigning permissions directly to individual users.
+    <img width="1920" height="1040" alt="image" src="https://github.com/user-attachments/assets/c59c36db-6127-4c8a-b675-e1b91a618620" />
+
+### 4. NTFS Permissions on Parent Folder (Software)
+  * I configured NTFS permissions on the Software folder.
+  * I granted Read & Execute access to IT_Techs.
+  * This allowed all IT staff to browse and access general software files.
+    <img width="1920" height="1036" alt="image" src="https://github.com/user-attachments/assets/b37021bb-dee2-4bc3-be80-b80be843a24d" />
+
+### 5. NTFS Permissions on Subfolder (Licenses)
+  * I opened the Security tab on the Licenses subfolder.
+  * I disabled inheritance to prevent automatic permission carryover.
+  * I removed IT_Techs permissions.
+  * I granted Full Control to the IT_Senior group only.
+    <img width="1920" height="1040" alt="image" src="https://github.com/user-attachments/assets/8c57a07c-b43f-487b-88c5-c95ea4bdfb9a" />
+
+### 6. Testing and Validation
+  * I logged in as a junior IT user and confirmed access to Software but denial to Licenses.
+  * I logged in as a senior IT user and confirmed full access to both folders.
+  * Access behavior matched the intended security design.
+
+### Result
+All IT staff could access the Software repository, while only senior IT staff could access the Licenses subfolder. Junior IT staff could not view or open the Licenses folder.
+
+### Key Takeaways
+ * NTFS inheritance must be controlled at the subfolder level.
+ * Role-based access prevents overexposure of sensitive data.
+ * Parent and child folders can enforce different security rules.
+ * This setup mirrors real enterprise software license management.
+
+### Skills Demonstrated
+ * NTFS inheritance management
+ * Subfolder permission isolation
+ * Role-based access control
+ * Active Directory security group design
+ * Enterprise IT file security implementation
+
