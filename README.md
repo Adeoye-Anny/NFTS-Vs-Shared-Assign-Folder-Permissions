@@ -29,6 +29,7 @@ I ensured the intern had read-only access to the Marketing shared folder while e
   * I logged in using the Marketing Intern account.
   * I successfully accessed and opened files in the Marketing folder.
   * I attempted to delete and modify files and confirmed the actions were blocked.
+    
 
 ### Result
 The Marketing Intern could view and open files only, with no ability to edit, delete, or add files. This confirmed that the permissions were correctly implemented.
@@ -213,6 +214,7 @@ I ensured:
   * I logged in as a junior IT user and confirmed access to Software but denial to Licenses.
   * I logged in as a senior IT user and confirmed full access to both folders.
   * Access behavior matched the intended security design.
+    <img width="1920" height="1036" alt="image" src="https://github.com/user-attachments/assets/64c2bd1d-4de4-4c17-853f-ec5f6015cd82" />
 
 ### Result
 All IT staff could access the Software repository, while only senior IT staff could access the Licenses subfolder. Junior IT staff could not view or open the Licenses folder.
