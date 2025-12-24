@@ -1,1 +1,1 @@
-# NFTS-Vs-Shared-Assign-Folder-Permissions
+# NFTS Vs Shared Assign Folder Permissions
